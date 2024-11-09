@@ -1,4 +1,3 @@
-````markdown
 # PHP Hardware ID Extension (hardware_id)
 
 This project provides a PHP extension for retrieving unique hardware identifiers across Linux and Windows platforms. The extension is designed to help obtain various system-specific IDs, such as the CPU ID, MAC ID, Hard Disk ID, and Board ID, useful for system-level applications requiring hardware identification.
@@ -15,11 +14,11 @@ The extension supports both **Linux** and **Windows** environments, adapting met
 ## Installation
 
 1. Clone the repository to your local machine:
+
    ```bash
    git clone https://github.com/Frank-The-Coder/hardware_id.git
    cd hardware_id
    ```
-````
 
 2. Build the extension:
 
