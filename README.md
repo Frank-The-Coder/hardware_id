@@ -1,15 +1,15 @@
-# PHP Hardware ID Extension (hardware_id)
+# Hardware ID Retrieval (hardware_id)
 
-This project provides a PHP extension for retrieving unique hardware identifiers across Linux and Windows platforms. The extension is designed to help obtain various system-specific IDs, such as the CPU ID, MAC ID, Hard Disk ID, and Board ID, useful for system-level applications requiring hardware identification.
+This project provides cross-platform C++ modules for retrieving unique hardware identifiers on Linux and Windows. The modules can retrieve system-specific information such as the CPU ID, MAC ID, Hard Disk ID, and Board ID, which are useful for applications requiring hardware identification and low-level system access.
 
 ## Features
 
-- **CPU ID**: Retrieves the unique CPU identifier.
-- **MAC ID**: Accesses the MAC address of the network interface.
-- **Hard Disk ID**: Fetches the identifier for the primary storage device.
-- **Board ID**: Gets the unique ID of the motherboard.
+- **CPU ID**: Uses assembly instructions and system calls to retrieve the unique CPU identifier.
+- **MAC ID**: Accesses the MAC address of the primary network interface through direct socket and ioctl system calls.
+- **Hard Disk ID**: Obtains the identifier of the primary storage device using ATA and SCSI protocols to interface directly with disk hardware.
+- **Board ID**: Retrieves the unique identifier of the motherboard by querying system commands.
 
-The extension supports both **Linux** and **Windows** environments, adapting methods to access hardware information based on the operating system.
+The modules are designed to work seamlessly across both **Linux** and **Windows** environments, providing consistent access to hardware information regardless of the operating system.
 
 ## Installation
 
@@ -20,35 +20,34 @@ The extension supports both **Linux** and **Windows** environments, adapting met
    cd hardware_id
    ```
 
-2. Build the extension:
+2. Compile the C++ code:
 
    - **Linux**:
      ```bash
-     phpize
-     ./configure
-     make
-     sudo make install
+     g++ -o hardware_id *.cpp
      ```
-   - **Windows**: Follow standard PHP extension compilation steps on Windows, ensuring you have the required build tools.
+   - **Windows**: Use a compatible C++ compiler (e.g., Visual Studio) to compile the `.cpp` files.
 
-3. Enable the extension by adding it to your `php.ini`:
-   ```ini
-   extension=phpext.so  # For Linux
-   extension=phpext.dll # For Windows
-   ```
+3. Ensure proper permissions are set for system calls, as root or admin privileges may be required for certain hardware queries.
 
 ## Usage
 
-Once installed, you can use the extension functions within your PHP code to retrieve hardware IDs:
+After compiling, you can run the modules to retrieve hardware IDs:
 
-```php
-<?php
-echo "CPU ID: " . get_cpu_id() . PHP_EOL;
-echo "MAC ID: " . get_mac_id() . PHP_EOL;
-echo "Hard Disk ID: " . get_harddisk_id() . PHP_EOL;
-echo "Board ID: " . get_board_id() . PHP_EOL;
-?>
+```bash
+./hardware_id
 ```
+
+Each function provides direct access to specific hardware identifiers:
+
+- `get_cpu_id()`: Retrieves the CPU identifier.
+- `get_mac_address()`: Retrieves the MAC address.
+- `get_hard_disk_id()`: Retrieves the hard disk serial number.
+- `get_board_id()`: Retrieves the motherboard identifier.
+
+## PHP Integration (Optional)
+
+This project also includes integration as a **PHP extension**, enabling PHP applications to access hardware identifiers directly. When compiled as a PHP extension, the functions are accessible within PHP using custom function names (`ld_get_cpu_id`, `ld_get_mac_addr`, etc.). This integration allows for seamless use of hardware identification within PHP environments.
 
 ## Supported Platforms
 
